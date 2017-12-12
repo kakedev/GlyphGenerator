@@ -97,6 +97,10 @@ function createNewGlyph() {
     $('#glyph-' + rand).remove();
   });
 
+  $('#grid-' + rand).mousedown(function() {
+    return false;
+  });
+
   generateOutput(rand);
 
 }
@@ -125,9 +129,12 @@ function generateOutput(id) {
       else
         currentByte += '0';
     }
-    outputStr += currentByte + '\n';
+
+    outputStr += currentByte;
     if(y !== 7)
-      outputStr += '\t';
+      outputStr += ',\n\t';
+    else
+      outputStr += '\n';
   }
 
   outputStr += '};';
