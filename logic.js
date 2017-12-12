@@ -7,7 +7,7 @@ function createNewGlyph() {
   let rand = randomInt(0, 999999);
   $('#gridArea').prepend(
     $('<div>').addClass('row').attr('id', 'glyph-' + rand).append(
-      $('<div>').addClass('col-md-12 col-lg-12 col-sm-12').append(
+      $('<div>').addClass('col-md-12 col-lg-12 col-sm-12 col-xs-12').append(
         $('<div>').addClass('panel panel-default').append(
           $('<div>').addClass('panel-heading').append(
             $('<strong>').attr('id', 'glyphHeading-' + rand).html('New Glyph')
@@ -18,7 +18,7 @@ function createNewGlyph() {
           )
         ).append(
           $('<div>').addClass('panel-body').append(
-            $('<div>').addClass('col-md-3 col-lg-3 col-sm-3').append(
+            $('<div>').addClass('col-md-3 col-lg-3 col-sm-3 col-xs-3').append(
               $('<div>').addClass('panel panel-primary grid-container glyph-panel').append(
                 $('<div>').addClass('panel-heading').html('Pixels')
               ).append(
@@ -26,7 +26,7 @@ function createNewGlyph() {
               )
             )
           ).append(
-            $('<div>').addClass('col-md-4 col-lg-4 col-sm-4').append(
+            $('<div>').addClass('col-md-4 col-lg-4 col-sm-4 col-xs-4').append(
               $('<div>').addClass('panel panel-primary glyph-panel').append(
                 $('<div>').addClass('panel-heading').html('Configuration')
               ).append(
@@ -46,7 +46,7 @@ function createNewGlyph() {
             )
           )
         ).append(
-          $('<div>').addClass('col-md-offset-1 col-lg-offset-1 col-sm-offset-1 col-md-4 col-lg-4 col-sm-4').append(
+          $('<div>').addClass('col-md-offset-1 col-lg-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-4 col-lg-4 col-sm-4 col-xs-4').append(
             $('<div>').addClass('panel panel-primary glyph-panel').append(
               $('<div>').addClass('panel-heading').html('Output')
             ).append(
