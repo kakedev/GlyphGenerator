@@ -1,0 +1,28 @@
+.grid-container {
+  width: 150px;
+}
+
+.glyph-panel {
+  margin-top: 20px;
+}
+
+.config-group {
+  margin-left: 25px;
+}
+
+.pixel {
+  width: 20px;
+  height: 20px;
+  border-left: 1px solid #d6d6d6;
+  border-top: 1px solid #d6d6d6;
+  border-right: 1.5px solid #ccc;
+  border-bottom: 1.5px solid #ccc;
+}
+
+.on {
+  background: #428bca;
+}
+
+.off {
+  background: #87ff9f;
+}
