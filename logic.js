@@ -1,9 +1,11 @@
 var mouseDown = false;
 
-$(document).mousedown(function() {
-  mouseDown = true;
-}).mouseup(function() {
-  mouseDown = false;
+$(document).mousedown(function(e) {
+  if(e.which == 1)
+    mouseDown = true;
+}).mouseup(function(e) {
+  if(e.which == 1)
+    mouseDown = false;
 });
 
 $(function() {
@@ -72,7 +74,8 @@ function createNewGlyph() {
   for(let i = 0; i < 8; i++) {
     for(let j = 0; j < 5; j++) {
       $('#grid-' + rand).append(
-        $('<canvas>').addClass('pixel off').attr('id', 'pixel-' + rand + '-' + (j + i * 5)).mousedown(function() {
+        $('<canvas>').addClass('pixel off').attr('id', 'pixel-' + rand + '-' + (j + i * 5)).mousedown(function(e) {
+          if(e.which !== 1) return;
           $(this).toggleClass('on off');
           generateOutput(rand);
         }).mouseenter(function() {
