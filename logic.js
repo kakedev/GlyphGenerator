@@ -1,3 +1,11 @@
+var mouseDown = false;
+
+$(document).mousedown(function() {
+  mouseDown = true;
+}).mouseup(function() {
+  mouseDown = false;
+});
+
 $(function() {
   $('#createBtn').click(createNewGlyph);
   createNewGlyph();
@@ -18,7 +26,7 @@ function createNewGlyph() {
           )
         ).append(
           $('<div>').addClass('panel-body').append(
-            $('<div>').addClass('col-md-3 col-lg-3 col-sm-3 col-xs-3').append(
+            $('<div>').addClass('col-md-2 col-lg-2 col-sm-2 col-xs-2').append(
               $('<div>').addClass('panel panel-primary grid-container glyph-panel').append(
                 $('<div>').addClass('panel-heading').html('Pixels')
               ).append(
@@ -32,7 +40,7 @@ function createNewGlyph() {
               ).append(
                 $('<div>').addClass('panel-body').append(
                   $('<div>').addClass('form-group').append(
-                    $('<label>').attr('for', 'glyphName' + rand).html('Glyph Name:')
+                    $('<label>').attr('for', 'glyphName-' + rand).html('Glyph Name:')
                   ).append(
                     $('<input>').addClass('form-control').attr('type', 'text').attr('id', 'glyphName-' + rand).attr('maxlength', '140')
                   )
@@ -46,8 +54,8 @@ function createNewGlyph() {
             )
           )
         ).append(
-          $('<div>').addClass('col-md-offset-1 col-lg-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-4 col-lg-4 col-sm-4 col-xs-4').append(
-            $('<div>').addClass('panel panel-primary glyph-panel').append(
+          $('<div>').addClass('col-md-6 col-lg-6 col-sm-6 col-xs-6').append(
+            $('<div>').addClass('panel panel-primary glyph-panel output-container').append(
               $('<div>').addClass('panel-heading').html('Output')
             ).append(
               $('<div>').addClass('panel-body').append(
@@ -64,7 +72,11 @@ function createNewGlyph() {
   for(let i = 0; i < 8; i++) {
     for(let j = 0; j < 5; j++) {
       $('#grid-' + rand).append(
-        $('<canvas>').addClass('pixel off').attr('id', 'pixel-' + rand + '-' + (j + i * 5)).click(function() {
+        $('<canvas>').addClass('pixel off').attr('id', 'pixel-' + rand + '-' + (j + i * 5)).mousedown(function() {
+          $(this).toggleClass('on off');
+          generateOutput(rand);
+        }).mouseenter(function() {
+          if(!mouseDown) return;
           $(this).toggleClass('on off');
           generateOutput(rand);
         })
@@ -97,9 +109,9 @@ function createNewGlyph() {
     $('#glyph-' + rand).remove();
   });
 
-  $('#grid-' + rand).mousedown(function() {
-    return false;
-  });
+   $('#grid-' + rand).mousedown(function(e) {
+     e.preventDefault();
+   });
 
   generateOutput(rand);
 
@@ -111,32 +123,34 @@ function randomInt(min,max)
 }
 
 function generateOutput(id) {
-  let outputStr = 'byte ';
+  let outputStr = '';
+  let binaryOutput = 'byte ';
+  let hexOutput = 'uint8_t ';
   let name = $('#glyphName-' + id).val();
 
-  if(name.trim() === '')
-    outputStr += 'name';
-  else
-    outputStr += name;
+  if(name.trim() == '') {
+    binaryOutput += 'name[8] = {\n\t';
+    hexOutput += 'name[8] = {';
+  } else {
+    binaryOutput += (name + '[8] = {\n\t');
+    hexOutput += (name + '[8] = {');
+  }
 
-  outputStr += '[8] = {\n\t';
-
-  for(let y = 0; y < 8; y++){
-    let currentByte = '0b';
+  for(let y = 0; y < 8; y++) {
+    let currentByte = '';
+    let currentHex = '';
     for(let x = 0; x < 5; x++) {
       if($('#pixel-'+id+'-'+(x+y*5)).is('.on') == true)
         currentByte += '1';
       else
         currentByte += '0';
     }
+    currentHex = parseInt(currentByte, 2).toString(16);
 
-    outputStr += currentByte;
-    if(y !== 7)
-      outputStr += ',\n\t';
-    else
-      outputStr += '\n';
+    binaryOutput += '0b' + currentByte + ((y !== 7) ? ',\n\t' : '\n};');
+    hexOutput += '0x' + ((currentHex.length == 2) ? currentHex : ('0' + currentHex)) + ((y !== 7) ? ', ' : '};');
   }
 
-  outputStr += '};';
+  outputStr += binaryOutput + '\n\n' + hexOutput;
   $('#output-' + id).html(outputStr);
 }
