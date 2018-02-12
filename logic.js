@@ -101,7 +101,7 @@ function createNewGlyph() {
   $('#glyphName-' + rand).keyup(function() {
     generateOutput(rand);
 
-    let name = $('#glyphName-' + rand).val();
+    let name = escapeHtml($('#glyphName-' + rand).val());
     if(name.trim() === '')
       $('#glyphHeading-' + rand).html('New Glyph');
     else
@@ -129,7 +129,7 @@ function generateOutput(id) {
   let outputStr = '';
   let binaryOutput = 'byte ';
   let hexOutput = 'uint8_t ';
-  let name = $('#glyphName-' + id).val();
+  let name = escapeHtml($('#glyphName-' + id).val());
 
   if(name.trim() == '') {
     binaryOutput += 'name[8] = {\n\t';
@@ -154,6 +154,13 @@ function generateOutput(id) {
     hexOutput += '0x' + ((currentHex.length == 2) ? currentHex : ('0' + currentHex)) + ((y !== 7) ? ', ' : '};');
   }
 
-  outputStr += binaryOutput + '\n\n' + hexOutput;
+  outputStr += '<strong>Binary:</strong>\n' + binaryOutput + '\n\n<strong>Hexadecimal:</strong>\n' + hexOutput;
   $('#output-' + id).html(outputStr);
+}
+
+function escapeHtml(text) {
+    'use strict';
+    return text.replace(/[\"&<>]/g, function (a) {
+        return { '"': '&quot;', '&': '&amp;', '<': '&lt;', '>': '&gt;' }[a];
+    });
 }
