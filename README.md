@@ -10,7 +10,7 @@ Simple Custom Character (Glyph) generator for HD44780 LCD modules
 
 
 #### **Pixels panel**
-+ Clicking or holding and draging your mouse on the blocks will turn them on or off.
++ *Clicking* or *holding and moving* your mouse on the blocks will turn them on or off.
 
 
 
