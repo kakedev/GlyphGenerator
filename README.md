@@ -2,7 +2,7 @@ GlyphGenerator
 ===
 Simple Custom Character (Glyph) generator for HD44780 LCD modules
 
-**The webpage is available [here](https://kakedev.github.io/GlyphGenartor)**
+**The webpage is available [here](https://kakedev.github.io/GlyphGenerator)**
 
 ## Usage
 #### **Main webpage**
